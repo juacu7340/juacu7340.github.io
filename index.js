@@ -19,7 +19,7 @@ async function gen(file_json) {
         }
         return html;
     } else if (file_json.type === "file") {
-        if (!file_json.name.endsWith(".html")) return "";
+        if (!file_json.name.endsWith(".html") || file_json.name === "index.html") return "";
         return `<li><h1><a href="./${file_json.path}">${file_json.path}</a> <a href="${file_json.download_url}">(raw)</a></h1></li>`;
     } else {
         return "";
