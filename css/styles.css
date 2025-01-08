@@ -1,0 +1,45 @@
+body {
+    font-family: "Liberation Mono", "Courier New", monospace;
+    margin: 0;
+    max-width: 80ch;  /* Keeps the 80-character width */
+    line-height: 1.6;
+    font-size: 16px;
+    background-color: #000;  /* Black background */
+    color: #bbb;  /* Light grey text */
+}
+
+a {
+    color: #4aa3ff;  /* Terminal-style blue for links */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    color: #fff;  /* White headers for contrast */
+    font-size: 24px;
+}
+
+code {
+    background-color: #222;  /* Slightly lighter for code blocks */
+    color: #ddd;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+p {
+    font-weight: normal; /* Remove bold style */
+    font-size: 24px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.text-container {
+    max-width: 80ch; /* Adjust the width as desired */
+    word-wrap: break-word;
+}
+
