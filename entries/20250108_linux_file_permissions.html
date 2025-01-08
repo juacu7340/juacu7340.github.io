@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Linux File Permissions</title>
+        <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    </head>
+
+    <body>
+        <h1><a href="../index.html">..</a></h1>
+        <div style="display: flex; align-items: center; margin: 10px;">
+            <a href="https://github.com/juacu7340">
+                <img src="../images/img.jpg" alt="Logo" style="height: 50px; margin-right: 15px;">
+            </a>
+            <h1 style="margin: 0;">(08-Jan-2025) Linux File Permissions</h1>
+        </div>
+        <!-- <p class="text-container"></p> -->
+        <p class="text-container">Well, long time of not posting anything here, life got in the way I guess. Hopefully I
+        can now atleast try to remain a bit more consistent with sharing things here.</p>
+        <p class="text-container">Today I'll talk a bit about how linux file permissions work. Turns
+        out it's really not that hard to understand, and I kind of delayed this knowledge till about
+        last year or so, might aswell put it out there. :)</p>
+        <p class="text-container">Linux file permissions essentially determine who can access files and directories on a system, and how. We can view file permissions with commands like `ls` (`ls -l`).</p>
+        <p class="text-container">The first field of the `ls -l` output is a group of metadata that includes the permissions on each file. Taking the second line `-rwxr-xr-x` as an example, we can see that Linux organizes permissions in the format: </p>
+        <p class="text-container"></p>
+        <p class="text-container">The *File type* tells us whether we are looking at a directory or a file. If we are looking at a directory, `d` would appear instead of `-`.</p>
+        <p class="text-container">The *Permission settings* is actually an expression of three different sets of permissions:</p>
+        <p class="text-container"></p>
+        <p class="text-container">The permissions for *Owner* represents what the owner of the file (the user who created the file or directory) can do with it; for *Group* represents what the users in the group the file or directory is associated to can do with it; for *Others* represents what all other users on the system who are neither the owner nor members of the group associated with the file can do with the file.</p>
+        <p class="text-container">Looking at the example output, the *Owner* is the user that appears after the permissions metadata, `juacu7340` in this example, followed by the *Group* name where the file is associated to, `staff`.</p>
+        <p class="text-container">As you can already see, there are a total of 3 types of permissions a file or directory can have 
+(`r` for *read*, `w` for write and `x` for execute). Since each set has 3 dedicated fields, one for each permission, it can be represented in binary as a number with 3 bits, meaning we can represent a total of 8 numbers with it (0-7), and in turn that means we can represent each set of permissions by an octal value, which is very common especially in programming.</p>
+        <p class="text-container"></p>
+        <p class="text-container">So, for example, the equivalent of the example above `rwxr-xr-x` could be written as `755`.</p>
+        <p class="text-container">The permissions behave in a similar yet not entirely equivalent way, when applied to files or directories. In practice, for files the permissions act as follows:</p>
+        <p class="text-container"></p>
+        <p class="text-container">For directories, the permissions act as follows:</p>
+        <p class="text-container"></p>
+        <p class="text-container">So that's linux file permissions in a nutshell, hope this
+        information provides usefull to you, the reader. Have a nice one!</p>
+        <p class="text-container"></p>
+        <p class="text-container"></p>
+        <p class="text-container"></p>
+    </body>
+</html>
