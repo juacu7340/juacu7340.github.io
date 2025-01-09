@@ -43,3 +43,28 @@ ul {
     word-wrap: break-word;
 }
 
+code, pre {
+    background-color: #111;  /* Dark background */
+    color: #9c5a1c;          /* Terminal-style text color */
+    font-size: 24px;
+    padding: 0;              /* Remove extra padding */
+    margin: 0;               /* Remove extra margin */
+    overflow-x: auto;        /* Horizontal scrolling for long lines */
+    line-height: 1.5;        /* Improves readability */
+    white-space: pre;        /* Preserve formatting and allow scrolling */
+    width: 100%;             /* Makes the block span the full container width */
+}
+
+table {
+    width: 50%;
+    margin: 20px auto;
+    border-collapse: collapse; /* Ensures no gaps between borders */
+    text-align: center;
+    border-spacing: 0; /* Removes extra space between cells */
+    border: 2px solid #9c5a1c; /* Adds a red border to the table */
+}
+th, td {
+    border: 2px solid #9c5a1c; /* Adds a red border to the table */
+    padding: 0; /* Removes padding inside cells */
+    line-height: 1; /* Reduces line height for tighter rows */
+}

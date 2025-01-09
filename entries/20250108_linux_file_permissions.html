@@ -17,29 +17,136 @@
         <!-- <p class="text-container"></p> -->
         <p class="text-container">Well, long time of not posting anything here, life got in the way I guess. Hopefully I
         can now atleast try to remain a bit more consistent with sharing things here.</p>
-        <p class="text-container">Today I'll talk a bit about how linux file permissions work. Turns
+        <p class="text-container">Today I'll talk a bit about how the linux file permissions work. Turns
         out it's really not that hard to understand, and I kind of delayed this knowledge till about
         last year or so, might aswell put it out there. :)</p>
-        <p class="text-container">Linux file permissions essentially determine who can access files and directories on a system, and how. We can view file permissions with commands like `ls` (`ls -l`).</p>
-        <p class="text-container">The first field of the `ls -l` output is a group of metadata that includes the permissions on each file. Taking the second line `-rwxr-xr-x` as an example, we can see that Linux organizes permissions in the format: </p>
+        <p class="text-container">Linux file permissions essentially determine who can access files
+        and directories on a system, and how. We can view file permissions with commands like
+        <code>ls</code> (<code>ls -l</code>).</p>
+        <p>The output of such command looks something like this:</p>
+<pre><code>$ ls -l
+total 72
+-rw-r--r--  1 juacu7340  staff   1071 Jul 25 19:37 LICENSE
+-rwxr-xr-x  1 juacu7340  staff  17400 Jul 25 19:45 main
+-rw-r--r--  1 juacu7340  staff     45 Jul 25 19:43 main.c
+-rw-r--r--  1 juacu7340  staff   1586 Jul 25 23:29 otpc.c
+-rw-r--r--  1 juacu7340  staff    172 Jul 25 20:37 otpc.h
+</code></pre>
+        <p class="text-container">The first field of the <code>ls -l</code> output is a group of
+        metadata that includes the permissions on each file. Taking the second line
+        <code>-rwxr-xr-x</code> as an example, we can see that Linux organizes permissions in the format: </p>
+        <ul>
+            <li>
+                <p>File type: <code>-</code></p>
+            </li>
+            <li>
+                <p>Permission settings: <code>rwxr-xr-x</code></p>
+            </li>
+        </ul>
+        <p class="text-container">The <b>File type</b> tells us whether we are looking at a
+        directory or a file. If we are looking at a directory, <code>d</code> would appear instead
+        of <code>-</code>.</p>
+        <p class="text-container">The <b>Permission settings</b> is actually an expression of three different sets of permissions:</p>
+        <ul>
+            <li>
+                <p>Owner: <code>rwx</code></p>
+            </li>
+            <li>
+                <p>Group: <code>r-x</code></p>
+            </li>
+            <li>
+                <p>Others: <code>r-x</code></p>
+            </li>
+        </ul>
+        <p class="text-container">The permissions for <b>Owner</b> represents what the owner of the
+        file (the user who created the file or directory) can do with it; for <b>Group</b>
+        represents what the users in the group the file or directory is associated to can do with
+        it; for <b>Others</b> represents what all other users on the system who are neither the owner nor members of the group associated with the file can do with the file.</p>
+        <p class="text-container">Looking at the example output, the <b>Owner</b> is the user that
+        appears after the permissions metadata, <code>juacu7340</code> in this example, followed by
+        the <b>Group</b> name where the file is associated to, <code>staff</code>.</p>
+        <p class="text-container">As you can already see, there are a total of 3 types of permissions a file or directory can have (<code>r</code> for read, <code>w</code> for write and <code>x</code> for execute). Since each set has 3 dedicated fields, one for each permission, it can be represented in binary as a number with 3 bits, meaning we can represent a total of 8 numbers with it (0-7), and in turn that means we can represent each set of permissions by an octal value, which is very common especially in programming.</p>
         <p class="text-container"></p>
-        <p class="text-container">The *File type* tells us whether we are looking at a directory or a file. If we are looking at a directory, `d` would appear instead of `-`.</p>
-        <p class="text-container">The *Permission settings* is actually an expression of three different sets of permissions:</p>
-        <p class="text-container"></p>
-        <p class="text-container">The permissions for *Owner* represents what the owner of the file (the user who created the file or directory) can do with it; for *Group* represents what the users in the group the file or directory is associated to can do with it; for *Others* represents what all other users on the system who are neither the owner nor members of the group associated with the file can do with the file.</p>
-        <p class="text-container">Looking at the example output, the *Owner* is the user that appears after the permissions metadata, `juacu7340` in this example, followed by the *Group* name where the file is associated to, `staff`.</p>
-        <p class="text-container">As you can already see, there are a total of 3 types of permissions a file or directory can have 
-(`r` for *read*, `w` for write and `x` for execute). Since each set has 3 dedicated fields, one for each permission, it can be represented in binary as a number with 3 bits, meaning we can represent a total of 8 numbers with it (0-7), and in turn that means we can represent each set of permissions by an octal value, which is very common especially in programming.</p>
-        <p class="text-container"></p>
-        <p class="text-container">So, for example, the equivalent of the example above `rwxr-xr-x` could be written as `755`.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th><p><b>Binary</b></p></th>
+                    <th><p><b>Octal</b></p></th>
+                    <th><p><b>Permission</b></p></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><p>000</p></td>
+                    <td><p>0</p></td>
+                    <td><code>---</code></td>
+                </tr>
+                <tr>
+                    <td><p>001</p></td>
+                    <td><p>1</p></td>
+                    <td><code>--x</code></td>
+                </tr>
+                <tr>
+                    <td><p>010</p></td>
+                    <td><p>2</p></td>
+                    <td><code>-w-</code></td>
+                </tr>
+                <tr>
+                    <td><p>011</p></td>
+                    <td><p>3</p></td>
+                    <td><code>-wx</code></td>
+                </tr>
+                <tr>
+                    <td><p>100</p></td>
+                    <td><p>4</p></td>
+                    <td><code>r--</code></td>
+                </tr>
+                <tr>
+                    <td><p>101</p></td>
+                    <td><p>5</p></td>
+                    <td><code>r-x</code></td>
+                </tr>
+                <tr>
+                    <td><p>110</p></td>
+                    <td><p>6</p></td>
+                    <td><code>rw-</code></td>
+                </tr>
+                <tr>
+                    <td><p>111</p></td>
+                    <td><p>7</p></td>
+                    <td><code>rwx</code></td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="text-container">So, for example, the equivalent of the example above
+        <code>rwxr-xr-x</code> could be written as <code>755</code>.</p>
         <p class="text-container">The permissions behave in a similar yet not entirely equivalent way, when applied to files or directories. In practice, for files the permissions act as follows:</p>
+        <ul>
+            <li>
+                <p><b>Read</b> (<code>r</code>): Read permission is used to access the file's contents. This permission is required to make copies of a file, because you need to access the file's contents to make a duplicate of it.</p>
+            </li>
+            <li>
+                <p><b>Write</b> (<code>w</code>): Write permission allows you to modify or change the contents of a file. Without write permission, changes to the file's contents are not permitted.</p>
+            </li>
+            <li>
+                <p><b>Execute</b> (<code>x</code>): Execute permission allows you to execute the contents of a file. Typically, executables would be things like commands or compiled applications, however, execute permissions also allows someone to run Bash shell scripts, Python programs, and a variety of interpreted languages.</p>
+            </li>
+        </ul>
         <p class="text-container"></p>
         <p class="text-container">For directories, the permissions act as follows:</p>
-        <p class="text-container"></p>
-        <p class="text-container">So that's linux file permissions in a nutshell, hope this
-        information provides usefull to you, the reader. Have a nice one!</p>
-        <p class="text-container"></p>
-        <p class="text-container"></p>
-        <p class="text-container"></p>
+        <ul>
+            <li>
+                <p><b>Read</b> (<code>r</code>): Like regular files, read permission allows you to read the contents of the directory. This means that you can view the contents (or files) stored within the directory.</p>
+            </li>
+            <li>
+                <p><b>Write</b> (<code>w</code>): This permission allows you to modify the contents of the directory, either adding files to the directory or removing files from the directory, creating files or copying files into the directory.</p>
+            </li>
+            <li>
+                <p><b>Execute</b> (<code>x</code>): Execute permission is very different on directories compared to files. You can think of it as providing access to the directory. Having execute permission on a directory authorises you to look at extended information on files in the directory (using <code>ls -l</code>, for instance) but also allows you to change your working directory (using <code>cd</code>) or pass through this directory on your way to a subdirectory underneath. Lacking this permission also means that you cannot add new files to the directory, since you wont have access to the directory's metadata to store the information for a new additional file. For this reason, directory-type files generally offer execute permission to one or more of the owner, group or others.</p>
+            </li>
+        </ul>
+        <p class="text-container">So that's linux file permissions in a nutshell, not that scary
+        once you understand them, atleast in my opinion.</p>
+        <p>Have a nice day. :)</p>
     </body>
 </html>
